@@ -44,10 +44,11 @@ export function SocketProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL ?? undefined;
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "https://violetchat-server.alwaysdata.net";
     const instance: AppSocket = io(socketUrl,{
       path: "/socket.io",
       auth: { token },
+      transports: ["websocket", "polling"],
       withCredentials: true,
       reconnection: true,
       reconnectionAttempts: Infinity,
