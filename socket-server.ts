@@ -11,6 +11,6 @@ const httpServer = createServer();
 // Aapka apna original socket logic attach kar diya
 createSocketServer(httpServer);
 
-httpServer.listen(port, () => {
+httpServer.listen(port,"0.0.0.0", () => {
   console.log(`Standalone Socket.IO server running on port ${port}`);
 });
