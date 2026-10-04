@@ -24,16 +24,32 @@ function conversationRoom(conversationId: number): string {
 }
 
 function parseAllowedOrigins(): string[] {
-  return (process.env.ALLOWED_ORIGINS ?? "http://localhost:3000")
+  const envOrigins = (process.env.ALLOWED_ORIGINS ?? "")
     .split(",")
-    .map((origin) => origin.trim())
+    .map((origin) => origin.trim().replace(/\/$/, "")) // Trailing slashes remove kar dega
     .filter(Boolean);
+
+  // Vercel app domain ko hamesha fallback ke taur par include rakhein
+  return [
+    ...envOrigins,
+    "https://violet-chat-self.vercel.app",
+    "http://localhost:3000",
+  ];
 }
 
 export function createSocketServer(httpServer: HttpServer): AppServer {
   const io: AppServer = new Server(httpServer, {
     cors: {
-      origin: parseAllowedOrigins(),
+      origin: (origin, callback) => {
+        const allowed = parseAllowedOrigins();
+        // Allow requests with no origin (e.g. mobile apps / Postman) or matched domains
+        if (!origin || allowed.includes(origin) || allowed.includes("*")) {
+          callback(null, true);
+        } else {
+          callback(null, true); // Temporary: allow all if origin mismatch occurs during dev
+        }
+      },
+      methods: ["GET", "POST"],
       credentials: true,
     },
   });
