@@ -44,8 +44,8 @@ export function SocketProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    // const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL ?? undefined;
-    const instance: AppSocket = io({
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL ?? undefined;
+    const instance: AppSocket = io(socketUrl,{
       path: "/socket.io",
       auth: { token },
       withCredentials: true,
