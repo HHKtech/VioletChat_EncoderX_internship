@@ -1,16 +1,15 @@
 // socket-server.ts
-import "dotenv/config";
 import { createServer } from "node:http";
 import { createSocketServer } from "./src/server/socketServer";
 
-const port = Number(process.env.PORT ?? 4000);
+// Alwaysdata ka system PORT pehle preference le, local fallback 4000 rahe
+const port = Number(process.env.PORT || 4000);
 
-// Sirf pure HTTP server banaya, Next.js load nahi kiya
 const httpServer = createServer();
 
-// Aapka apna original socket logic attach kar diya
 createSocketServer(httpServer);
 
-httpServer.listen(port,"0.0.0.0", () => {
+// Alwaysdata reverse proxy ke liye "0.0.0.0" binding
+httpServer.listen(port, "0.0.0.0", () => {
   console.log(`Standalone Socket.IO server running on port ${port}`);
 });
