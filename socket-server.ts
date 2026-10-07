@@ -8,6 +8,6 @@ const httpServer = createServer();
 createSocketServer(httpServer);
 
 // Explicitly bind to 0.0.0.0 so Alwaysdata's reverse proxy can reach it
-httpServer.listen(port, "0.0.0.0", () => {
+httpServer.listen(port, "::", () => {
   console.log(`Standalone Socket.IO server running on port ${port}`);
 });

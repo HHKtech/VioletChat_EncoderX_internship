@@ -59015,7 +59015,7 @@ async function handleConnection(io2, socket) {
 var port = Number(process.env.PORT || 4e3);
 var httpServer = (0, import_node_http.createServer)();
 createSocketServer(httpServer);
-httpServer.listen(port, "0.0.0.0", () => {
+httpServer.listen(port, "::", () => {
   console.log(`Standalone Socket.IO server running on port ${port}`);
 });
 /*! Bundled license information:
