@@ -58,7 +58,7 @@ export function AuthShell({ children }: { children: ReactNode }) {
         </div>
 
         <p className="relative z-10 text-xs text-white/60">
-          EncoderX Remote Internship — Batch 02 · Task 4
+          VioletChat build with <a href="https://socket.io/" className="underline">Socket.IO</a> and <a href="https://www.postgresql.org/" className="underline">PostgreSQL</a>.
         </p>
 
         <div
